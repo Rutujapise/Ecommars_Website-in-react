@@ -1,29 +1,48 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 function LoginForm() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [rememberMe, setRememberMe] = useState(false);
   const [message, setMessage] = useState('');
+  const [user,setUser]=useState({})
 
-  const handleSubmit = (e) => {
+  const navigate =useNavigate();
+  useEffect(()=>{
+    const u = JSON.parse(localStorage.getItem("user"));
+    console.log(typeof(u),`in effect`)
+    setUser ({...user,...u});
+  },[]);
+
+  function handleLogin  (e)  {
     e.preventDefault();
-
-    if (!email || !password) {
-      setMessage('⚠️ Please fill in both email and password.');
-      return;
+    try{
+       if (user.email== email&& user.password== password) {
+      alert('Success')
+      navigate('/dashboard');
+    } else{
+      alert("invalid Candidate");
+      navigate('/')
     }
+   } catch(error){
+    console.log(error)
+   }
 
-    const userData = { email, password };
-    localStorage.setItem('loginData', JSON.stringify(userData));
-    setMessage('✅ Login details saved to Local Storage!');
-  };
+    
+  }
+
+
+   // const userData = { email, password };
+    //localStorage.setItem('loginData', JSON.stringify(userData));
+    //setMessage('✅ Login details saved to Local Storage!');
+  
 
   return (
   <div style={{width: '100%', background: 'linear-gradient(135deg, #173645ff, #d446cfff)' }}>
     <div className="container w-50 mx-auto border shadow  rounded-2 p-4 bg-white"
      style={{ width: '100%', maxWidth: '700px', height: '500px', background: 'linear-gradient(135deg, #d2ac4bff, #d446cfff)'  }}
      >
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={handleLogin}>
         <h1 className="text-center text-primary mb-4">Login Page</h1>
 
         <div className="mb">
@@ -68,6 +87,6 @@ function LoginForm() {
     </div>
     </div>
   );
-}
+};
 
 export default LoginForm;

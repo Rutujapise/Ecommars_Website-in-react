@@ -1,10 +1,13 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 const RegisterForm = ( {setIsRegistered}) => {
   const [username, setUsername] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [success, setSuccess] = useState(false);
+  const navigate = useNavigate()
+
 
   function handleRegister(event) {
     event.preventDefault();
@@ -25,7 +28,9 @@ const RegisterForm = ( {setIsRegistered}) => {
     existingUsers.push(payload);
     localStorage.setItem('users', JSON.stringify(existingUsers));
     setIsRegistered(true)
+ 
     setSuccess(true);
+       navigate('/');
     setUsername('');
     setEmail('');
     setPassword('');
