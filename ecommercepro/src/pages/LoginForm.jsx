@@ -1,5 +1,6 @@
-import React, { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import React, { useContext, useEffect, useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import {AuthContext} from '../Context/AuthProvider'
 function LoginForm() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -8,17 +9,15 @@ function LoginForm() {
   const [user,setUser]=useState({})
 
   const navigate =useNavigate();
-  useEffect(()=>{
-    const u = JSON.parse(localStorage.getItem("user"));
-    console.log(typeof(u),`in effect`)
-    setUser ({...user,...u});
-  },[]);
+ 
+   const {loggedUser,login}= useContext(AuthContext)
 
   function handleLogin  (e)  {
     e.preventDefault();
     try{
-       if (user.email== email&& user.password== password) {
-      alert('Success')
+      const mgs = login (email ,password )
+       if (mgs) {
+      alert('mgs')
       navigate('/dashboard');
     } else{
       alert("invalid Candidate");
@@ -38,12 +37,15 @@ function LoginForm() {
   
 
   return (
-  <div style={{width: '100%', background: 'linear-gradient(135deg, #173645ff, #d446cfff)' }}>
-    <div className="container w-50 mx-auto border shadow  rounded-2 p-4 bg-white"
-     style={{ width: '100%', maxWidth: '700px', height: '500px', background: 'linear-gradient(135deg, #d2ac4bff, #d446cfff)'  }}
-     >
-      <form onSubmit={handleLogin}>
-        <h1 className="text-center text-primary mb-4">Login Page</h1>
+  <div className="d-flex justify-content-center align-items-center vh-100"
+      style={{ background: 'linear-gradient(135deg, #173645ff, #d446cfff)' }}
+    >
+      <div
+        className="p-4 shadow rounded bg-white"
+        style={{ maxWidth: '700px', width: '100%', background: 'linear-gradient(135deg, #d2ac4bff, #d446cfff)' }}
+      >
+        <form onSubmit={handleLogin}>
+          <h1 className="text-center text-primary mb-4">Login Page</h1>
 
         <div className="mb">
           <label htmlFor="emailInput" className="form-label">Email address</label>
@@ -82,7 +84,12 @@ function LoginForm() {
         </div>
 
         <button type="submit" className="btn btn-primary w-100">Login</button>
-
+         <p className="mt-3 text-center">
+            Don’t have an account?{' '}
+          <button className=' btn btn-primary'>  <Link to="/register" className="text-decoration-none fw-bold text-dark">
+              Register here
+            </Link> </button>
+          </p>
       </form>
     </div>
     </div>

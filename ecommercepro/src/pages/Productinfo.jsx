@@ -1,10 +1,12 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { useParams, Link, Route, Routes } from 'react-router-dom';
 import productList from '../data';
+import { CreateTheme } from '../Context/ThemeProvider';
 
 const ProductInfo = () => {
   const { ID } = useParams(); // ID will be a string
   const [product, setProduct] = useState(null);
+  const {theme} = useContext(CreateTheme)
 
   useEffect(() => {
     const selectedProduct = productList.find((p) => p.id === ID);

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 const RegisterForm = ( {setIsRegistered}) => {
   const [username, setUsername] = useState('');
@@ -109,6 +109,13 @@ const RegisterForm = ( {setIsRegistered}) => {
           >
             Register
           </button>
+          {/* Switch to Login Page */}
+          <p className="mt-3 text-center">
+            Already have an account?{' '}
+            <button className=' btn btn-primary'> <Link to="/" className="text-decoration-none fw-bold text-dark">
+              Login here
+            </Link></button>
+          </p>
         </form>
       </div>
     </div>

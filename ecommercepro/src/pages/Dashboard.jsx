@@ -7,8 +7,7 @@ const Dashboard = ({product}) => {
   const[productState,setProductState]=useState(product)
   return (
     <>
-    <Navbar/>
-
+    
 
      <div className="d-flex flex-wrap">
         {productState.map((product, index) => (
