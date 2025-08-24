@@ -40,11 +40,11 @@ const RegisterForm = ( {setIsRegistered}) => {
   return (
     <div
       className="d-flex justify-content-center align-items-center vh-100 m-0"
-      style={{ background: 'linear-gradient(135deg, #173645ff, #d446cfff)' }}
+      style={{ background: 'linear-gradient(135deg, #8dbfd5ff, #f675757c)' }}
     >
       <div
         className="p-4 shadow rounded bg-white"
-        style={{ width: '100%', maxWidth: '700px', height: '700px', background: 'linear-gradient(135deg, #d2ac4bff, #d446cfff)'  }}
+        style={{ width: '100%', maxWidth: '700px', height: '700px', background: 'linear-gradient(135deg,  #a8f556ff, #f2af6bff)'  }}
       >
         <h2 className="text-center mb-4 text-primary">Register</h2>
         <form onSubmit={handleRegister}>

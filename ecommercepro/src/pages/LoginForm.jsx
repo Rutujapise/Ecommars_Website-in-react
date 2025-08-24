@@ -1,8 +1,9 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, useEffect, useRef, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import {AuthContext} from '../Context/AuthProvider'
 function LoginForm() {
   const [email, setEmail] = useState('');
+ const inputRef=useRef()
   const [password, setPassword] = useState('');
   const [rememberMe, setRememberMe] = useState(false);
   const [message, setMessage] = useState('');
@@ -10,6 +11,7 @@ function LoginForm() {
 
   const navigate =useNavigate();
  
+  useEffect(()=>{inputRef.current.focus()},[])
    const {loggedUser,login}= useContext(AuthContext)
 
   function handleLogin  (e)  {
@@ -38,18 +40,18 @@ function LoginForm() {
 
   return (
   <div className="d-flex justify-content-center align-items-center vh-100"
-      style={{ background: 'linear-gradient(135deg, #173645ff, #d446cfff)' }}
+      style={{ background: 'linear-gradient(135deg, #8dbfd5ff, #f675757c)' }}
     >
       <div
         className="p-4 shadow rounded bg-white"
-        style={{ maxWidth: '700px', width: '100%', background: 'linear-gradient(135deg, #d2ac4bff, #d446cfff)' }}
+        style={{ maxWidth: '700px', width: '100%', background: 'linear-gradient(135deg, #a8f556ff, #f2af6bff)' }}
       >
         <form onSubmit={handleLogin}>
           <h1 className="text-center text-primary mb-4">Login Page</h1>
 
         <div className="mb">
           <label htmlFor="emailInput" className="form-label">Email address</label>
-          <input
+          <input ref={inputRef}
             type="email"
             className="form-control"
             id="emailInput"

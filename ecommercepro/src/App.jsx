@@ -3,12 +3,14 @@ import './App.css';
 import LoginForm from './pages/LoginForm';
 import RegisterForm from './pages/RegisterForm';
 import Dashboard from './pages/Dashboard';
-import ProductInfo from './pages/ProductInfo';
 import product from './data';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import { ThemeProvider } from './Context/ThemeProvider';
 import Navbar from './Componants/Navbar';
 import { AuthProvider } from './Context/AuthProvider';
+import CartPages from './pages/CartPages';
+import CartProvider from './Context/CartProvider';
+import ProductInfo from './pages/Productinfo';
 
 function App() {
   const [isRegistered, setIsRegistered] = useState(false);
@@ -17,13 +19,16 @@ function App() {
    <ThemeProvider>
     <Router>
       <AuthProvider>
+        <CartProvider>
       <Navbar></Navbar>
       <Routes>
         <Route path="/" element={<LoginForm />} />
         <Route path="/register" element={<RegisterForm setIsRegistered={setIsRegistered} />} />
         <Route path="/dashboard" element={<Dashboard product={product} />} />
         <Route path='/dashboard/:ID/*' element={<ProductInfo />} />
+        <Route path='/cart' element={<CartPages/>}></Route>
       </Routes>
+      </CartProvider>
       </AuthProvider>
     </Router>
   </ThemeProvider>

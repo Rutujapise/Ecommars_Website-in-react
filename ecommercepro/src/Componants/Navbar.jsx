@@ -2,10 +2,15 @@ import React, { useContext } from "react";
 import { CreateTheme } from "../Context/ThemeProvider";
 import { AuthContext } from "../Context/AuthProvider";
 import { Link } from "react-router-dom";
+import { CartContext } from "../Context/CartProvider";
 
 const Navbar = () => {
   const { theme, toggleTheme } = useContext(CreateTheme);
   const { loggedUser, logout } = useContext(AuthContext);
+  const { state } = useContext(CartContext);
+
+  // count items in cart
+  const cartCount = state.cart.reduce((sum, item) => sum + item.qty, 0);
 
   return (
     <nav
@@ -15,11 +20,11 @@ const Navbar = () => {
     >
       <div className="container">
         {/* Brand */}
-        <Link className="navbar-brand fw-bold fs-4" to="/">
-          Navbar
+        <Link className="navbar-brand fw-bold fs-4" to="/dashboard">
+          E-Store
         </Link>
 
-        {/* Navbar toggler (mobile view) */}
+        {/* Navbar toggler for mobile */}
         <button
           className="navbar-toggler"
           type="button"
@@ -29,24 +34,51 @@ const Navbar = () => {
           <span className="navbar-toggler-icon"></span>
         </button>
 
-       
-
-        {/* Right side (User info + Theme toggle) */}
         <div className="d-flex align-items-center gap-3">
+          {/* Cart Button */}
+          
+
+          {/* User info */}
           {loggedUser && (
             <>
-              <span className="fw-semibold"  style={{
-                  color: theme === "dark" ? "#ffcc00" : "#333", // Yellow in dark mode, dark grey in light mode
+              <span
+                className="fw-semibold"
+                style={{
+                  color: theme === "dark" ? "#ffcc00" : "#333",
                   fontWeight: "bold",
-                }}>{loggedUser.name}</span>
-              <button className="btn btn-outline-danger btn-sm" onClick={logout}>
+                }}
+              >
+                {loggedUser.name}
+              </span>
+              <button
+                className="btn btn-outline-danger btn-sm"
+                onClick={logout}
+              >
                 Logout
               </button>
+              <Link
+            to="/cart"
+            className="btn btn-outline-primary position-relative"
+          >
+            <i className="fa-solid fa-cart-shopping"></i>
+            {cartCount > 0 && (
+              <span
+                className="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger"
+                style={{ fontSize: "0.7rem" }}
+              >
+                {cartCount}
+              </span>
+            )}
+          </Link>
             </>
+            
           )}
 
           {/* Theme toggle */}
-          <button className="btn btn-outline-secondary btn-sm" onClick={toggleTheme}>
+          <button
+            className="btn btn-outline-secondary btn-sm"
+            onClick={toggleTheme}
+          >
             {theme === "light" ? (
               <i className="fa-solid fa-toggle-off"></i>
             ) : (
